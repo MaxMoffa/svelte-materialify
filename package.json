@@ -70,10 +70,5 @@
     "svelte-preprocess": "^4.6.5"
   },
   "types": "@types/index.d.ts",
-  "exports": {
-    ".": {
-      "svelte": "./src/index.js"
-    }
-  },
   "svelte": "dist/index.js"
 }
