@@ -1,64 +1,74 @@
 {
-  "name": "root",
-  "private": true,
-  "engines": {
-    "yarn": ">=1.22.0"
+  "name": "svelte-materialify",
+  "version": "0.3.11",
+  "description": "A material design framework/component library for Svelte, with full support for light and dark themes and customisability.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheComputerM/svelte-materialify",
+    "directory": "packages/svelte-materialify"
   },
+  "author": "TheComputerM",
+  "main": "compiled/index.js",
+  "module": "compiled/index.mjs",
   "scripts": {
-    "api": "lerna run api",
-    "build": "lerna run build",
-    "dev": "lerna run --stream dev",
-    "docs": "lerna run docs",
-    "fmt": "prettier . -w --plugin-search-dir=.",
-    "fmt:check": "prettier . -c --plugin-search-dir=.",
-    "lint": "concurrently \"yarn:lint:js\" \"yarn:lint:css\"",
-    "lint:css": "stylelint **/*.scss --syntax scss",
-    "lint:css:fix": "stylelint **/*.scss --syntax scss --fix",
-    "lint:fix": "concurrently \"yarn:lint:js:fix\" \"yarn:lint:css:fix\"",
-    "lint:js": "eslint . --ext .svelte,.js",
-    "lint:js:fix": "eslint . --ext .svelte,.js --fix",
-    "release": "lerna publish",
-    "test": "lerna run --stream test"
+    "build": "concurrently \"yarn:build:js\" \"yarn:build:minimal\"",
+    "build:js": "rollup -c",
+    "build:minimal": "node preprocess.js",
+    "check": "svelte-check --workspace src/components",
+    "prepublishOnly": "concurrently \"yarn:build:js\" \"yarn:build:minimal\"",
+    "test": "jest",
+    "version": "standard-changelog && git add CHANGELOG.md"
   },
-  "dependencies": {
-    "husky": "^4.3.8",
-    "lint-staged": "^10.5.3"
+  "files": [
+    "@types",
+    "compiled",
+    "dist",
+    "src"
+  ],
+  "keywords": [
+    "svelte",
+    "sveltejs",
+    "svelte-components",
+    "material-design",
+    "material",
+    "material-theme",
+    "material-components",
+    "component-library",
+    "svelte-material",
+    "ui",
+    "ui-components",
+    "ui-kit"
+  ],
+  "peerDependencies": {
+    "svelte": ">=3.29.4"
   },
   "devDependencies": {
-    "@commitlint/cli": "^11.0.0",
-    "@commitlint/config-conventional": "^11.0.0",
-    "babel-eslint": "^10.1.0",
+    "@babel/core": "^7.12.13",
+    "@babel/preset-env": "^7.12.13",
+    "@rollup/plugin-commonjs": "^17.1.0",
+    "@rollup/plugin-node-resolve": "^11.1.1",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/svelte": "^3.0.3",
+    "babel-jest": "^26.6.3",
     "concurrently": "^5.3.0",
-    "eslint": "^7.19.0",
-    "eslint-config-airbnb-base": "^14.2.1",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-svelte3": "^3.0.0",
-    "lerna": "^3.22.1",
-    "prettier": "^2.2.1",
-    "prettier-plugin-package": "^1.3.0",
-    "prettier-plugin-svelte": "^2.1.1",
-    "stylelint": "^13.9.0",
-    "stylelint-config-standard": "^20.0.0",
-    "stylelint-scss": "^3.18.0",
-    "svelte": "^3.32.1"
+    "cssnano": "4.1.10",
+    "del": "^6.0.0",
+    "glob": "^7.1.6",
+    "jest": "^26.6.3",
+    "postcss": "^8.2.4",
+    "rollup": "^2.38.4",
+    "rollup-plugin-bundle-size": "^1.0.3",
+    "rollup-plugin-svelte": "^7.1.0",
+    "rollup-plugin-terser": "^7.0.2",
+    "sass": "^1.32.6",
+    "standard-changelog": "^2.0.24",
+    "svelte": "^3.32.1",
+    "svelte-check": "^1.1.32",
+    "svelte-htm": "^1.1.1",
+    "svelte-jester": "^1.3.0",
+    "svelte-preprocess": "^4.6.5"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged",
-      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
-    }
-  },
-  "lint-staged": {
-    "*.scss": "stylelint --syntax scss --fix",
-    "*.{js,svelte}": "eslint --ext .svelte,.js --fix",
-    "*.{js,ts,svelte,scss,md}": "prettier -w --plugin-search-dir=."
-  },
-  "workspaces": {
-    "packages": [
-      "packages/*"
-    ],
-    "nohoist": [
-      "husky"
-    ]
-  }
+  "types": "@types/index.d.ts",
+  "svelte": "dist/index.js"
 }
